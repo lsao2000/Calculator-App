@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText inputText;
     String textValue;
+    String calculAction;
     int EqualValue, firstNum, secondNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,17 +97,17 @@ public class MainActivity extends AppCompatActivity {
         eight.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                inputText.setText("");
                 inputText.setText(textValue += String.valueOf(EIGHT));
             }
         });
         nine.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                if(textValue.equalsIgnoreCase("")){
-                    inputText.setText(String.valueOf(NINE));
-                }else{
+                inputText.setText("");
+
                     inputText.setText(textValue += String.valueOf(NINE));
-                }
+
             }
         });
         zero.setOnClickListener(new View.OnClickListener(){
@@ -128,24 +129,117 @@ public class MainActivity extends AppCompatActivity {
         addition.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                calculAction = "+";
                 if(textValue.equalsIgnoreCase("") || textValue.isEmpty()){
-
-                }else{
-                    firstNum += Integer.parseInt(textValue);
                     inputText.setText("");
                     textValue = "";
+                }else if(firstNum == 0 & secondNum == 0){
+                    firstNum = Integer.parseInt(textValue);
+                    inputText.setText("");
+                    textValue = "";
+
+                }else {
+                    if(secondNum == 0 & firstNum >= 0){
+                        secondNum = Integer.parseInt(textValue);
+                        inputText.setText("");
+                        textValue = "";
+                    }else if (secondNum >= 0 & firstNum >= 0) {
+                        secondNum += Integer.parseInt(textValue);
+                        inputText.setText("");
+                        textValue = "";
+                    }
+                }
+            }
+
+        });
+        substract.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                calculAction = "-";
+                if(textValue.equalsIgnoreCase("") || textValue.isEmpty()){
+                    inputText.setText("");
+                    textValue = "";
+                }else{
+                    if(firstNum == 0 & secondNum == 0){
+                        firstNum = Integer.parseInt(textValue);
+                        inputText.setText("");
+                        textValue = "";
+                    }else {
+                        if(secondNum == 0 & firstNum >= 0){
+                            secondNum = Integer.parseInt(textValue);
+                            inputText.setText("");
+                            textValue = "";
+
+                        }else if(secondNum >= 0 & firstNum >= 0){
+                            secondNum -= Integer.parseInt(textValue);
+                            inputText.setText("");
+                            textValue = "";
+
+                        }
+                    }
                 }
             }
         });
+        division.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                calculAction = "/";
+                if(textValue.equalsIgnoreCase("")){
+                    inputText.setText("");
+                    textValue = "";
+
+                }else{
+                    if(firstNum == 0 & secondNum == 0){
+                        firstNum = Integer.parseInt(textValue);
+                        inputText.setText("");
+                    }else{
+                        if(firstNum >= 0 & secondNum == 0){
+                            secondNum = Integer.parseInt(textValue);
+                            inputText.setText("");
+                        }else if(secondNum >= 0 & firstNum >= 0){
+                            secondNum /= Integer.parseInt(textValue);
+                            inputText.setText("");
+                        }
+
+                    }
+                }
+            }
+        });
+
         equals.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 if(textValue.equalsIgnoreCase("")){
-
+                    if(firstNum != 0){
+                        EqualValue = firstNum;
+                        inputText.setText(String.valueOf(EqualValue));
+                        firstNum = 0;
+                    }
                 }else{
-                    secondNum = Integer.parseInt(textValue);
-                    EqualValue = firstNum + secondNum;
+                    if(calculAction.equalsIgnoreCase("+")){
+                        secondNum = Integer.parseInt(textValue);
+                        EqualValue = firstNum + secondNum;
+                    }else if(calculAction.equalsIgnoreCase("-")){
+                        secondNum = Integer.parseInt(textValue);
+                        EqualValue = firstNum - secondNum;
+                    }
+                    else if(calculAction.equalsIgnoreCase("/")){
+                        secondNum = Integer.parseInt(textValue);
+                        EqualValue = firstNum / secondNum;
+                    }
+                    else if (calculAction.equalsIgnoreCase("*")){
+                        secondNum = Integer.parseInt(textValue);
+                        EqualValue = firstNum * secondNum;
+                    }else{
+                        if(!textValue.equalsIgnoreCase("")){
+                            EqualValue = Integer.parseInt(textValue);
+                        }
+                    }
                     inputText.setText(String.valueOf(EqualValue));
+                    firstNum = 0;
+                    secondNum = 0;
+                    EqualValue = 0;
+                    calculAction = "";
                 }
             }
         });
