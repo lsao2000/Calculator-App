@@ -249,7 +249,7 @@
             android:layout_height="100dp"
             android:text="="
             android:textColor="@color/colorWhite"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             android:textSize="25sp"
             android:layout_row="4"
             android:layout_column="2"
