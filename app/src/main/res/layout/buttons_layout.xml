@@ -205,7 +205,7 @@
             android:onClick="onButtonClicked"
             />
         <Button
-            android:id="@+id/plus_btn"
+            android:id="@+id/addition_btn"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:text="+"
