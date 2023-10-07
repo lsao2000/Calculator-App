@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         buttonEqual    = (Button) findViewById(R.id.equalbtn);
         buttonPower    = (Button) findViewById(R.id.power_btn);
         buttonClear    = (Button) findViewById(R.id.clear_btn);
+
         }
         public void onButtonClicked(View view){
             Button button = (Button) view;
@@ -42,10 +43,14 @@ public class MainActivity extends AppCompatActivity {
                 case "C":
                     input = null;
                     output = null;
-                    inputText.setText("");
+                    outputText.setText("");
                     break;
                 case "^":
                     input += "^";
+                    solve();
+                    break;
+                case "*":
+                    input += "*";
                     solve();
                     break;
                 case "=":
@@ -65,11 +70,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                     input+= data;
             }
-            inputText.setText("");
+            inputText.setText(input);
     }
-    public void solve(){
-        if(input.split("//+").length == 2){
-
+    private void solve(){
+        if(input.split("\\+").length == 2){
+            String numbers [] = input.split("\\+");
+            try{
+                double d = Double.parseDouble(numbers[0])+Double.parseDouble(numbers[1]);
+                output   = Double.toString(d);
+                outputText.setText(output);
+                input = d + "";
+            }
+            catch (Exception e){
+                outputText.setText(e.getMessage().toString());
+            }
         }
     }
 }
